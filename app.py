@@ -8,6 +8,7 @@ from src.database import (
     get_candidates,
     save_screening_candidates,
     update_candidate_stage,
+    clear_all_candidates,
 )
 
 # ---------------------------------------------------------
@@ -308,6 +309,46 @@ with st.sidebar:
 # ---------------------------------------------------------
 
 # Initialize SQLite and import legacy JSON records once
+
+# Temporary admin-protected candidate cleanup
+if "cleanup_authorized" not in st.session_state:
+    st.session_state.cleanup_authorized = False
+
+with st.sidebar.expander("Admin Cleanup"):
+    cleanup_password = st.text_input(
+        "Admin password",
+        type="password",
+        key="cleanup_password_input",
+    )
+
+    if st.button("Verify password"):
+        expected_password = st.secrets.get(
+            "CLEANUP_PASSWORD", ""
+        )
+        if expected_password and cleanup_password == expected_password:
+            st.session_state.cleanup_authorized = True
+            st.success("Admin verified.")
+        else:
+            st.error("Incorrect password.")
+
+    if st.session_state.cleanup_authorized:
+        st.warning(
+            "This permanently deletes ALL candidates, "
+            "stage history, and JSON screening results."
+        )
+        confirm_cleanup = st.checkbox(
+            "I understand and want to delete all candidate records."
+        )
+
+        if st.button("DELETE ALL CANDIDATES", type="primary"):
+            if confirm_cleanup:
+                clear_all_candidates()
+                st.session_state.screening_results = []
+                st.success("Candidate records cleared.")
+                st.rerun()
+            else:
+                st.error("Confirm deletion using the checkbox.")
+
 init_db()
 
 if "database_migrated" not in st.session_state:

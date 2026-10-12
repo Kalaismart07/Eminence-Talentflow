@@ -259,3 +259,15 @@ def save_screening_candidates(results, job_id=None):
             saved += 1
 
     return saved
+
+
+def clear_all_candidates():
+    """Remove all candidate records and their stage history."""
+    init_db()
+
+    with get_connection() as conn:
+        conn.execute("DELETE FROM stage_history")
+        conn.execute("DELETE FROM candidates")
+
+    if RESULTS_FILE.exists():
+        RESULTS_FILE.write_text("[]", encoding="utf-8")
