@@ -1,0 +1,13 @@
+
+.venv/
+__pycache__/
+*.pyc
+.env
+.streamlit/secrets.toml
+data/*.db
+data/screening_results.json
+data/resumes/
+data/job_descriptions/
+app_backup.py
+app_backup_before_redesign.py
+app_backup_before_ui_redesign.py
