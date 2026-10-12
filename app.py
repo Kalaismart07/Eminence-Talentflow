@@ -334,23 +334,23 @@ if page == "Dashboard":
         "Monitor candidate screening and recruitment progress."
     )
 
-    results = st.session_state.screening_results
+    results = get_candidates()
 
-    total_candidates = len(results)
+    total_candidates = len(results) 
 
     shortlisted = sum(
-        1 for r in results
-        if r["status"] == "Shortlisted"
+    1 for r in results
+    if r.get("recommendation") == "Shortlisted"
     )
 
     under_review = sum(
-        1 for r in results
-        if r["status"] == "Under Review"
+    1 for r in results
+    if r.get("recommendation") == "Under Review"
     )
 
     not_recommended = sum(
-        1 for r in results
-        if r["status"] == "Not Recommended"
+    1 for r in results
+    if r.get("recommendation") == "Not Recommended"
     )
 
     col1, col2, col3, col4 = st.columns(4)
@@ -394,7 +394,7 @@ if page == "Dashboard":
                 "Candidate": result.get("name", "Unknown"),
                 "Email": result.get("email", ""),
                 "Match Score": f'{float(result.get("final_score", 0)):.1f}%',
-                "Recommendation": result.get("status", "Under Review"),
+                "Recommendation": result.get("recommendation", "Under Review"),
             })
 
         st.dataframe(
