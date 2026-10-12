@@ -288,7 +288,6 @@ with st.sidebar:
         "Navigation",
         [
             "Dashboard",
-            "Jobs",
             "Candidates",
             "Job Requirements",
             "Candidate Screening",
