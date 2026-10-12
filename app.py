@@ -108,130 +108,119 @@ st.set_page_config(
 # CUSTOM CSS
 # ---------------------------------------------------------
 
-st.markdown("""
 
+st.markdown("""
 <style>
 :root {
     --brand: #2563eb;
     --brand-dark: #1d4ed8;
-    --page-bg: #f5f8fc;
+    --page-bg: #f4f7fc;
     --surface: #ffffff;
     --text: #172033;
     --muted: #64748b;
     --border: #e2e8f0;
 }
 
-.stApp {
+.stApp,
+[data-testid="stAppViewContainer"] {
     background: var(--page-bg);
     color: var(--text);
 }
 
-[data-testid="stAppViewContainer"] {
-    background: var(--page-bg);
-}
-
 [data-testid="stHeader"] {
-    background: rgba(245, 248, 252, 0.92);
+    background: rgba(244, 247, 252, 0.94);
 }
 
 .block-container {
     max-width: 1500px;
-    padding-top: 1.7rem;
-    padding-bottom: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
 }
 
+/* Sidebar */
 [data-testid="stSidebar"] {
     background: #ffffff;
     border-right: 1px solid var(--border);
 }
 
 [data-testid="stSidebar"] > div:first-child {
-    padding-top: 1.2rem;
+    padding: 1.5rem 1rem;
 }
 
+[data-testid="stSidebar"] hr {
+    margin: 1.2rem 0;
+    border-color: var(--border);
+}
+
+/* Typography */
 h1, h2, h3 {
     color: var(--text) !important;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
 }
 
 h1 {
-    font-size: 2rem !important;
+    font-size: 2.1rem !important;
     font-weight: 750 !important;
 }
 
 h2 {
-    font-size: 1.35rem !important;
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
 }
 
 h3 {
-    font-size: 1.05rem !important;
+    font-size: 1.08rem !important;
+    font-weight: 650 !important;
 }
 
 p, label, [data-testid="stMarkdownContainer"] {
     color: var(--text);
 }
 
+/* Dashboard metric cards */
 [data-testid="stMetric"] {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.025);
+    border-radius: 15px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.035);
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.2s ease;
+}
+
+[data-testid="stMetric"]:hover {
+    border-color: #bfdbfe;
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
 }
 
 [data-testid="stMetricLabel"] {
-    color: var(--muted);
-    font-size: 0.85rem;
+    color: var(--muted) !important;
+    font-size: 0.86rem;
+    font-weight: 550;
 }
 
 [data-testid="stMetricValue"] {
-    color: var(--text);
+    color: var(--text) !important;
+    font-size: 2rem;
     font-weight: 750;
 }
 
+/* Containers and cards */
 [data-testid="stVerticalBlockBorderWrapper"] {
     border-color: var(--border) !important;
-    border-radius: 12px !important;
-}
-
-.stButton > button,
-.stDownloadButton > button {
-    border-radius: 8px;
-    font-weight: 600;
-    border-color: var(--border);
-}
-
-.stButton > button[kind="primary"] {
-    background: var(--brand);
-    color: #ffffff;
-    border-color: var(--brand);
-}
-
-.stButton > button[kind="primary"]:hover {
-    background: var(--brand-dark);
-    border-color: var(--brand-dark);
-}
-
-[data-testid="stDataFrame"] {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-[data-testid="stTextInput"] input,
-[data-testid="stTextArea"] textarea,
-[data-testid="stSelectbox"] div[data-baseweb="select"] {
-    border-radius: 8px;
+    border-radius: 14px !important;
 }
 
 .candidate-card {
     background: var(--surface);
     color: var(--text);
-    padding: 14px 18px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    border-radius: 14px;
     border: 1px solid var(--border);
-    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.025);
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
 }
 
 .candidate-card b {
@@ -242,8 +231,59 @@ p, label, [data-testid="stMarkdownContainer"] {
     color: var(--muted);
 }
 
+/* Buttons */
+.stButton > button,
+.stDownloadButton > button {
+    border-radius: 9px;
+    font-weight: 650;
+    min-height: 42px;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover {
+    border-color: #93c5fd;
+    color: var(--brand-dark);
+}
+
+.stButton > button[kind="primary"] {
+    background: var(--brand);
+    color: #ffffff;
+    border-color: var(--brand);
+}
+
+.stButton > button[kind="primary"]:hover {
+    background: var(--brand-dark);
+    color: #ffffff;
+    border-color: var(--brand-dark);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.18);
+}
+
+/* Tables */
+[data-testid="stDataFrame"] {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.025);
+}
+
+/* Inputs */
+[data-testid="stTextInput"] input,
+[data-testid="stTextArea"] textarea,
+[data-testid="stSelectbox"] div[data-baseweb="select"] {
+    border-radius: 9px;
+}
+
+[data-testid="stTextInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+/* Scores and statuses */
 .score {
-    font-size: 26px;
+    font-size: 27px;
     font-weight: 750;
     color: var(--brand);
 }
@@ -266,9 +306,29 @@ p, label, [data-testid="stMarkdownContainer"] {
 hr {
     border-color: var(--border);
 }
-</style>
 
+/* Cleaner focus indicators */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    .block-container {
+        padding-top: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h1 {
+        font-size: 1.7rem !important;
+    }
+}
+</style>
 """, unsafe_allow_html=True)
+
 
 
 # ---------------------------------------------------------
